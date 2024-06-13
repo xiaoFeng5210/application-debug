@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 7</title>
+    <defs>
+        <rect id="path-1" x="8" y="8" width="48" height="48" rx="24"></rect>
+        <filter x="-33.3%" y="-29.2%" width="166.7%" height="166.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.827951353   0 0 0 0 0.894401194   0 0 0 0 0.91813328  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="输入密码键盘" transform="translate(-56.000000, -54.000000)">
+            <g id="编组-7" transform="translate(56.000000, 54.000000)">
+                <g id="矩形">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <g id="arrow-left-s-line-(1)" transform="translate(26.388813, 24.636000)" fill="#3E464C" fill-rule="nonzero">
+                    <polygon id="路径" points="3.27237461 7.364 9.0001873 13.0918127 7.364 14.728 0 7.364 7.364 0 9.0001873 1.6361873"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
