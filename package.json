@@ -16,7 +16,7 @@
     "postcss-pxtorem": "^6.1.0",
     "sass": "^1.77.2",
     "vant": "^4.9.0",
-    "vue": "^3.4.21"
+    "vue": "^3.4.30"
   },
   "devDependencies": {
     "@vant/auto-import-resolver": "^1.2.1",

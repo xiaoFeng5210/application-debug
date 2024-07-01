@@ -108,7 +108,7 @@ interface MaintainRequest {
   cmd: string
 }
 
-interface PointListRes extends Res {
+export interface PointListRes extends Res {
   data: { name: string, display_name: string }[]
   cmd_data: any
 }

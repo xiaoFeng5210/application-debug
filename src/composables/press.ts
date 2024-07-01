@@ -2,9 +2,11 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { useRobotControlService } from '@/stores/robotControlService';
 
 const usePressEvent = () => {
-  const { moveByLongPress, stopMove } = useRobotControlService()
+  const { moveByLongPress, stopMove, rotateByLongPress } = useRobotControlService()
 
   let timer: NodeJS.Timeout | null = null
+
+  let longPressTimer: NodeJS.Timeout | null = null
   const isLongPressing = ref(false)
 
   onMounted(() => {
@@ -30,7 +32,33 @@ const usePressEvent = () => {
     document.oncontextmenu = null
   })
 
-  const pressStart = (e: any, direction: string) => {
+  const clearLongPressTimer = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer)
+      longPressTimer = null
+    }
+  }
+
+  // 因为在长按的持续时间内，需要不断的发送指令（目前是长按时候每2s调用一次），所以需要一个长按的控制函数
+  const longPressControl = (type: string, direction: string) => {
+    clearLongPressTimer()
+    longPressTimer = setInterval(async () => {
+      if (isLongPressing.value) {
+        console.log("执行中")
+        // 长按时候的操作
+        if (type === 'rotate') {
+          await rotateByLongPress(direction)
+        } else {
+          await moveByLongPress(direction)
+        }
+      } else {
+        console.log("执行结束")
+        clearLongPressTimer()
+      }
+    }, 2000)
+  }
+
+  const pressStart = (e: any, direction: string, type?: string) => {
     // e.preventDefault()
     if (timer) {
       clearTimeout(timer)
@@ -40,20 +68,27 @@ const usePressEvent = () => {
       if (isLongPressing.value) return
       isLongPressing.value = true
       // 开始长按
-      console.log('长按')
-      await moveByLongPress(direction)
+      if (type === 'rotate') {
+        await rotateByLongPress(direction)
+        longPressControl('rotate', direction)
+      } else {
+        await moveByLongPress(direction)
+        longPressControl('move', direction)
+      }
     }, 400)
   }
 
   const pressEnd = () => {
-    isLongPressing.value = false
+    clearLongPressTimer()
     if (timer) {
       clearTimeout(timer)
       timer = null
     }
-    setTimeout(() => {
+    if (isLongPressing.value) {
+      console.log('停止运动')
+      isLongPressing.value = false
       stopMove()
-    }, 500)
+    }
   }
 
   return {

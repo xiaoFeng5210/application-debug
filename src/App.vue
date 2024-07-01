@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import {computed, onUnmounted, ref} from "vue"
+import {computed, onMounted, onUnmounted, ref} from "vue"
 import usePressEvent from '@/composables/press';
 import {useRobotControlService} from '@/stores/robotControlService'
 import {onBeforeMount} from 'vue';
+import Rotation from "@/components/rotation.vue";
 
-const imgWidth = 90;
+const imgWidth = 120;
 const renderCmd = ref({})
 let timer: NodeJS.Timer | null = null;
 
@@ -39,6 +40,27 @@ onBeforeMount(() => {
   getConfig()
   pollGetStatus()
 })
+onMounted((() => {
+  // 禁用双指缩放
+  document.addEventListener('gesturestart', function(event) {
+    event.preventDefault();
+  });
+
+  // 禁用双击缩放
+  document.addEventListener('dblclick', function(event) {
+    event.preventDefault();
+  });
+
+  // 防止 iOS 上双指缩放
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    const now = (new Date()).getTime();
+    if ((now - lastTouchEnd) <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+}))
 onUnmounted(() => {
   if (timer) {
     clearInterval(timer as any)
@@ -99,59 +121,64 @@ const fineTurning = async (direction: string) => {
         </div>
       </div>
 
-
       <div class="main">
         <div class="up_down">
-          <div class="up control_button" @touchstart="pressStart($event, 'up')" @touchend="pressEnd()"
-               @mousedown="pressStart($event, 'up')"
-               @mouseup="pressEnd()"
-               @click="fineTurning('up')">
-            <img style="transform: rotate(90deg);" src="/image/left_button.png" :width="imgWidth" alt="">
-            <span>上移</span>
-          </div>
-          <div class="down control_button" @touchstart="pressStart($event, 'down')" @touchend="pressEnd()"
-                @mousedown="pressStart($event, 'down')"
-                @mouseup="pressEnd()"
-               @click="fineTurning('down')">
-            <img src="/image/left_button.png" style="transform: rotate(-90deg);" :width="imgWidth" alt="">
-            <span>下移</span>
-          </div>
-        </div>
-        <div class="left_right">
-          <div class="button_group">
-            <div class="advance control_button" @touchstart="pressStart($event, 'forward')" @touchend="pressEnd()"
-                 @mousedown="pressStart($event, 'forward')"
-                  @mouseup="pressEnd()"
-                 @click="fineTurning('forward')">
-              <img src="/image/left_button.png" :width="imgWidth" style="transform: rotate(90deg);" alt="">
-              <span>前移</span>
+            <div class="up control_button" @touchstart="pressStart($event, 'up')" @touchend="pressEnd()"
+                 @mousedown="pressStart($event, 'up')"
+                 @mouseup="pressEnd()"
+                 @click="fineTurning('up')">
+              <img style="transform: rotate(90deg);" src="/image/left_button.png" :width="imgWidth" alt="">
+              <span>上移</span>
             </div>
-
-            <div class="left control_button" @touchstart="pressStart($event, 'left')" @touchend="pressEnd()"
-                  @mousedown="pressStart($event, 'left')"
-                  @mouseup="pressEnd()"
-                 @click="fineTurning('left')">
-              <img src="/image/left_button.png" :width="imgWidth" alt="">
-              <span>左移</span>
-            </div>
-
-            <div class="right control_button" @touchstart="pressStart($event, 'right')" @touchend="pressEnd()"
-                  @mousedown="pressStart($event, 'right')"
-                  @mouseup="pressEnd()"
-                 @click="fineTurning('right')">
-              <img src="/image/right_button.png" :width="imgWidth" alt="">
-              <span>右移</span>
-            </div>
-            <div class="back_control control_button" @touchstart="pressStart($event, 'backward')" @touchend="pressEnd()"
-                  @mousedown="pressStart($event, 'backward')"
-                  @mouseup="pressEnd()"
-                 @click="fineTurning('backward')">
+            <div class="down control_button" @touchstart="pressStart($event, 'down')" @touchend="pressEnd()"
+                 @mousedown="pressStart($event, 'down')"
+                 @mouseup="pressEnd()"
+                 @click="fineTurning('down')">
               <img src="/image/left_button.png" style="transform: rotate(-90deg);" :width="imgWidth" alt="">
-              <span>后移</span>
+              <span>下移</span>
             </div>
           </div>
-        </div>
+        <div class="left_right">
+            <div class="button_group">
+              <div class="advance control_button" @touchstart="pressStart($event, 'forward')" @touchend="pressEnd()"
+                   @mousedown="pressStart($event, 'forward')"
+                   @mouseup="pressEnd()"
+                   @click="fineTurning('forward')">
+                <img src="/image/left_button.png" :width="imgWidth" style="transform: rotate(90deg);" alt="">
+                <span>前移</span>
+              </div>
+
+              <div class="left control_button" @touchstart="pressStart($event, 'left')" @touchend="pressEnd()"
+                   @mousedown="pressStart($event, 'left')"
+                   @mouseup="pressEnd()"
+                   @click="fineTurning('left')">
+                <img src="/image/left_button.png" :width="imgWidth" alt="">
+                <span>左移</span>
+              </div>
+
+              <div class="rotation_box rotation">
+                <Rotation />
+              </div>
+
+              <div class="right control_button" @touchstart="pressStart($event, 'right')" @touchend="pressEnd()"
+                   @mousedown="pressStart($event, 'right')"
+                   @mouseup="pressEnd()"
+                   @click="fineTurning('right')">
+                <img src="/image/right_button.png" :width="imgWidth" alt="">
+                <span>右移</span>
+              </div>
+              <div class="back_control control_button" @touchstart="pressStart($event, 'backward')" @touchend="pressEnd()"
+                   @mousedown="pressStart($event, 'backward')"
+                   @mouseup="pressEnd()"
+                   @click="fineTurning('backward')">
+                <img src="/image/left_button.png" style="transform: rotate(-90deg);" :width="imgWidth" alt="">
+                <span>后移</span>
+              </div>
+            </div>
+          </div>
       </div>
+
+
       <div class="footer">
         <van-button type="danger" @click="stopRobot">急 停</van-button>
         <van-button type="primary" @click="startRobot">启 动</van-button>
@@ -160,16 +187,6 @@ const fineTurning = async (direction: string) => {
 <!--        <van-button type="warning" @click="endTeachMode">停止示教</van-button>-->
       </div>
     </div>
-<!--    <div class="pose_area">-->
-<!--      <header>-->
-<!--      <van-dropdown-menu>-->
-<!--         <van-dropdown-item v-model="currentPose" :options="PoseOptions"/>-->
-<!--      </van-dropdown-menu>-->
-<!--      </header>-->
-<!--      <main>-->
-<!--        <van-button v-for="(value, key, index) in renderCmd" @click="postureAction(key)">{{ value.name }}</van-button>-->
-<!--      </main>-->
-<!--    </div>-->
   </div>
 </template>
 

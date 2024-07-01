@@ -136,6 +136,20 @@ export const useRobotControlService = defineStore('robotControlService', {
         showNotify({type: 'danger', message: `${directionText} 微调失败`})
       }
     },
+    // 旋转
+    async rotateByStep(direction: string){
+      const response = await debugClient({cmd: 'fine_rotate', param: {direction, mode: 'jog'}}).catch(error => {
+        showNotify({type: 'danger', message: '微调请求失败'})
+        return
+      })
+      const directionText = rotateTextMap()[direction]
+      const data = response?.data;
+      if (data && data.code === 0) {
+        showNotify({type: 'success', message: `${directionText} 微调成功`})
+      } else {
+        showNotify({type: 'danger', message: `${directionText} 微调失败`})
+      }
+    },
     // 长按微调
     async moveByLongPress(direction: string) {
       const response = await debugClient({cmd: 'fine_tune', param: {direction, mode: 'continuous'}}).catch(error => {
@@ -143,6 +157,20 @@ export const useRobotControlService = defineStore('robotControlService', {
         return
       })
       const directionText = directionTextMap()[direction]
+      const data = response?.data;
+      if (data && data.code === 0) {
+        showNotify({type: 'success', message: `${directionText} 长按微调成功`})
+      } else {
+        showNotify({type: 'danger', message: `${directionText} 长按微调失败`})
+      }
+    },
+    // 旋转长按微调
+    async rotateByLongPress(direction: string) {
+      const response = await debugClient({cmd: 'fine_rotate', param: {direction, mode: 'continuous'}}).catch(error => {
+        showNotify({type: 'danger', message: '长按微调请求失败'})
+        return
+      })
+      const directionText = rotateTextMap()[direction]
       const data = response?.data;
       if (data && data.code === 0) {
         showNotify({type: 'success', message: `${directionText} 长按微调成功`})
@@ -302,5 +330,14 @@ function directionTextMap(): Record<string, string> {
     'right': '右移',
     'forward': '前移',
     'backward': '后移'
+  }
+}
+
+function rotateTextMap(): Record<string, string> {
+  return {
+    left: '左旋转',
+    right: '右旋转',
+    forward: '前旋转',
+    backward: '后旋转'
   }
 }
