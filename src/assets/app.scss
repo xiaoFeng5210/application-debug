@@ -13,6 +13,27 @@
     flex-direction: column;
     //padding-top: 0.7rem;
 
+    &:deep(.van-cell) {
+      @media only screen and (min-width: 768px) {
+        height: 150px;
+      }
+    }
+
+    &:deep(.van-cell__title) {
+      @media only screen and (min-width: 768px) {
+        font-size: 2rem;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+    }
+    &:deep(.van-cell__label) {
+      @media only screen and (min-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
     .test_run {
       width: 100%;
       display: flex;
@@ -32,12 +53,20 @@
       align-items: center;
       //gap: 20px;
       img {
-        //width: 62px;
-        //height: 62px;
-        max-width: 4rem;
+        @media only screen and (min-width: 768px) {
+          width: 6rem;
+        }
+        @media only screen and (max-width: 768px) {
+          width: 4rem;
+        }
       }
       span {
-        font-size: 1rem;
+        @media only screen and (max-width: 768px) {
+          font-size: 1rem;
+        }
+        @media only screen and (min-width: 768px) {
+          font-size: 2rem;
+        }
       }
 
       .up_down {
@@ -115,8 +144,15 @@
           grid-template-areas: '. . advance . .'
                             'left rotation rotation rotation right'
                              '. . back_control . .';
-          grid-template-columns: 66px 70px 66px 70px 66px;
-          grid-template-rows: 140px minmax(66px, 1fr) 140px;
+
+          @media only screen and (max-width: 768px) {
+            //grid-template-columns: 66px 70px 66px 70px 66px;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 180px minmax(66px, 1fr) 180px;
+          }
+          @media only screen and (min-width: 768px) {
+            grid-template-rows: repeat(3, 1fr);
+          }
         }
       }
     }
@@ -191,10 +227,4 @@
   padding-top: 1rem;
   width: 60%;
   display: flex;
-}
-
-.rotation_box {
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
 }

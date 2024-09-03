@@ -38,12 +38,25 @@ const fineTurning = async (direction: string) => {
 
 <style scoped lang="scss">
 $length: 15rem;
-$width: 8rem;
+$width: 12rem;
 $height: 10rem;
-$offset: -45px;
-
-$contentWidth: 4rem;
+$offset: -3.5rem;
+$directionWidth: 150px;
+$contentWidth: 6rem;
 $borderWidth: calc(($width - $contentWidth) / 2);
+
+
+$length2: 8rem;
+$width2: 6rem;
+$height2: 6rem;
+$contentWidth2: 3rem;
+$borderWidth2: calc(($width2 - $contentWidth2) / 2);
+$directionWidth2: 60px;
+$offset2: -1.8rem;
+
+
+
+
 .rotation_svg_box {
   width: $length;
   height: $length;
@@ -55,13 +68,13 @@ $borderWidth: calc(($width - $contentWidth) / 2);
   height: $width;
   background-color: transparent;
   border: $borderWidth solid #41575D;
-  //border-image: linear-gradient(to bottom, #41575D, white) 1;
   filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.7));
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   &::before {
+    font-size: 2rem;
     content: '旋转';
     text-align: center;
     line-height: $contentWidth;
@@ -72,10 +85,11 @@ $borderWidth: calc(($width - $contentWidth) / 2);
     position: absolute;
   }
 }
+
 .direction-btn {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: $directionWidth;
+  height: $directionWidth;
   //background-color: #3A4E54;
   border: none;
   display: flex;
@@ -101,4 +115,70 @@ $borderWidth: calc(($width - $contentWidth) / 2);
   background-color: rgba(0, 0, 0, 0.5);
   visibility: hidden;
 }
+
+
+
+@media only screen and (max-width: 768px) {
+
+
+  .rotation_svg_box {
+    width: $length2;
+    height: $length2;
+  }
+
+  .direction-control {
+    position: relative;
+    width: $width2;
+    height: $width2;
+    background-color: transparent;
+    border: $borderWidth2 solid #41575D;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.7));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      font-size: 1rem;
+      content: '旋转';
+      text-align: center;
+      line-height: $contentWidth2;
+      width: $contentWidth2; /* 200px - 2*20px */
+      height: $contentWidth2;
+      background-color: transparent; /* 也可以设置为 transparent，具体取决于需要 */
+      border-radius: 50%;
+      position: absolute;
+    }
+  }
+
+  .direction-btn {
+    position: absolute;
+    width: $directionWidth2;
+    height: $directionWidth2;
+    //background-color: #3A4E54;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .arrow {
+    color: white;
+    font-size: 24px;
+    line-height: 1;
+  }
+  .top { top: $offset2; border-radius: 50% 50% 0 0; }
+  .right { right: $offset2; border-radius: 0 50% 50% 0; }
+  .bottom { bottom: $offset2; border-radius: 0 0 50% 50%; }
+  .left { left: $offset2; border-radius: 50% 0 0 50%; }
+  .center-circle {
+    width: 100px;
+    height: 100px;
+    //border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+  }
+}
+
 </style>

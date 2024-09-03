@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, ref} from "vue"
+import {computed, onMounted, onUnmounted, ref, watchEffect} from "vue"
 import usePressEvent from '@/composables/press';
 import {useRobotControlService} from '@/stores/robotControlService'
 import {onBeforeMount} from 'vue';
 import Rotation from "@/components/rotation.vue";
 
-const imgWidth = 120;
+const imgWidth = 0;
 const renderCmd = ref({})
 let timer: NodeJS.Timer | null = null;
 
 // const {currentPose, PoseOptions} = usePoseControl();
-const robotStatus = ref<any>({})
+const robotStatus = ref<any>({
+  "机器人状态": "启动中",
+  "电机状态": "启动中",
+})
 // 手动自动区分
 const startAuto = ref(true)
 const startManual = ref(false)
@@ -106,6 +109,25 @@ const moveTo = async (param: string) => {
 const fineTurning = async (direction: string) => {
   await moveByStep(direction);
 }
+
+// 区分手机端和PC端
+const isMobile = computed(() => {
+  const userAgentInfo = navigator.userAgent;
+  const Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+  let flag = false;
+  for (let v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = true;
+      break;
+    }
+  }
+  return flag;
+})
+const styleComputed = computed(() => {
+  return {
+    fontSize: isMobile.value ? '1rem' : '2rem'
+  }
+})
 </script>
 
 <template>
@@ -116,8 +138,8 @@ const fineTurning = async (direction: string) => {
           <van-cell v-for="(value, key) in robotStatus" :title="key" :label="value" />
         </div>
         <div class="control_button_control">
-          <van-button :type="autoButtonStyle" style="margin-right: 1rem" @click="handleAutoMode">自动模式</van-button>
-          <van-button :type="manualButtonStyle" @click="handleManualMode">手动模式</van-button>
+          <van-button :type="autoButtonStyle" style="margin-right: 1rem;" :style="styleComputed" @click="handleAutoMode">自动模式</van-button>
+          <van-button :type="manualButtonStyle" @click="handleManualMode" :style="styleComputed">手动模式</van-button>
         </div>
       </div>
 
@@ -180,11 +202,11 @@ const fineTurning = async (direction: string) => {
 
 
       <div class="footer">
-        <van-button type="danger" @click="stopRobot">急 停</van-button>
-        <van-button type="primary" @click="startRobot">启 动</van-button>
-        <van-button type="default" @click="backToOrigin">回原点</van-button>
-<!--        <van-button type="primary" @click="teachMode">示 教</van-button>-->
-<!--        <van-button type="warning" @click="endTeachMode">停止示教</van-button>-->
+        <van-button type="danger" @click="stopRobot" :style="styleComputed">急 停</van-button>
+        <van-button type="primary" @click="startRobot" :style="styleComputed">启 动</van-button>
+        <van-button type="default" @click="backToOrigin" :style="styleComputed">回原点</van-button>
+        <van-button type="primary" @click="teachMode" :style="styleComputed">示 教</van-button>
+        <van-button type="warning" @click="endTeachMode" :style="styleComputed">停止示教</van-button>
       </div>
     </div>
   </div>
