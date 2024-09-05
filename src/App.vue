@@ -11,8 +11,8 @@ let timer: NodeJS.Timer | null = null;
 
 // const {currentPose, PoseOptions} = usePoseControl();
 const robotStatus = ref<any>({
-  "机器人状态": "启动中",
-  "电机状态": "启动中",
+  // "机器人状态": "启动中",
+  // "电机状态": "启动中",
 })
 // 手动自动区分
 const startAuto = ref(true)

@@ -41,7 +41,7 @@ $length: 15rem;
 $width: 12rem;
 $height: 10rem;
 $offset: -3.5rem;
-$directionWidth: 150px;
+$directionWidth: 100px;
 $contentWidth: 6rem;
 $borderWidth: calc(($width - $contentWidth) / 2);
 
