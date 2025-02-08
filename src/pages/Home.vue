@@ -127,8 +127,7 @@ function clearTimer() {
           <van-button :type="autoButtonStyle" style="margin-right: 1rem;" :style="styleComputed"
             @click="handleAutoMode">自动模式</van-button>
           <van-button :type="manualButtonStyle" @click="handleManualMode" :style="styleComputed">手动模式</van-button>
-          <van-button type="primary" style="margin-left: 1rem;" @click="handleSettings"
-            :style="styleComputed">参数设置</van-button>
+
         </div>
       </div>
 
@@ -179,11 +178,15 @@ function clearTimer() {
 
 
       <div class="footer">
-        <van-button type="danger" @click="stopRobot" :style="styleComputed">急 停</van-button>
-        <van-button type="primary" @click="startRobot" :style="styleComputed">启 动</van-button>
-        <van-button type="default" @click="backToOrigin" :style="styleComputed">回原点</van-button>
+        <van-button type="success" @click="startRobot" :style="styleComputed">启 动</van-button>
+
         <van-button type="primary" @click="teachMode" :style="styleComputed">示 教</van-button>
+        <van-button type="default" @click="backToOrigin" :style="styleComputed">回原点</van-button>
+
+
+        <van-button type="danger" @click="stopRobot" :style="styleComputed">急 停</van-button>
         <van-button type="warning" @click="endTeachMode" :style="styleComputed">停止示教</van-button>
+        <van-button type="primary" @click="handleSettings" :style="styleComputed">参数设置</van-button>
       </div>
     </div>
   </div>

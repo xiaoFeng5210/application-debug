@@ -96,13 +96,15 @@ function navigateBack() {
 </script>
 
 <template>
-  <div class="background p-2 w-screen h-screen overflow-hidden">
-    <div class="flex items-center justify-between fixed top-2 px-5" @click="navigateBack">
-      <van-icon name="arrow-left" class="text-white text-4xl " />
+  <div class="background p-2 w-screen min-h-screen overflow-y-auto">
+    <div class="flex items-center justify-between fixed top-0 left-0" @click="navigateBack">
+      <div class="p-2">
+        <van-icon name="arrow-left" class="text-white text-4xl " />
+      </div>
+      <h1 class="text-4xl font-bold text-white text-center">参数设置</h1>
     </div>
-    <h1 class="text-4xl font-bold text-white text-center">参数设置</h1>
 
-    <van-form label-width="35vw" class="mt-10 w-full" @submit="onSubmit" :validate-trigger="['onChange', 'onBlur']">
+    <van-form label-width="35vw" class="mt-[12vw] w-full" @submit="onSubmit" :validate-trigger="['onChange', 'onBlur']">
       <van-cell-group inset>
         <van-field v-model="form.step" name="手动移动步进值" type="digit" label="手动移动步进值" placeholder="手动移动步进值" :min="0"
           :max="20" :rules="[{ required: true, message: '请填写手动移动步进值' }, {
