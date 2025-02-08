@@ -117,7 +117,7 @@ function clearTimer() {
 </script>
 
 <template>
-  <div class="g_box background">
+  <div class="g_box background overflow-y-auto">
     <div class="control_area">
       <div class="header">
         <div class="test_run">
