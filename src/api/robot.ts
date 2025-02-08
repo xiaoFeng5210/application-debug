@@ -1,4 +1,4 @@
-import {http} from "@/utils/http";
+import { http } from "@/utils/http";
 
 // import type {Res} from "@/api"
 
@@ -213,7 +213,7 @@ export const baseActions = async (data: MaintainRequest): Promise<Record<'data',
  * 获取点位列表
  */
 export const getPointList = async (): Promise<Record<'data', PointListRes>> => {
-  return await http.get("point_list")
+  return await http.get("point_list", undefined, { timeout: 3000 })
 }
 
 /**
@@ -228,7 +228,7 @@ export const debugClient = async (data: DebugRequest): Promise<Record<'data', Mo
  * cmd: "entry_debug" | "exit_debug"
  */
 export const maintainClient = async (cmd: string) => {
-  return await http.post(`maintain`, {cmd})
+  return await http.post(`maintain`, { cmd })
 }
 
 /**
@@ -263,5 +263,12 @@ export const getLightsTimeRange = async (): Promise<Record<'data', LightsRespons
  * 机器人状态
  */
 export const getRobotStatus = async (): Promise<any> => {
-  return await http.get('system_status')
+  return await http.get('system_status', undefined, { timeout: 999 })
+}
+
+/**
+ * 设置参数
+ */
+export const setParams = async (data: any): Promise<Record<'data', Res>> => {
+  return await http.post(`update_config`, data as any, { timeout: 5000 })
 }

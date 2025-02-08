@@ -225,6 +225,8 @@
 
 .control_button_control {
   padding-top: 1rem;
-  width: 60%;
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
 }
