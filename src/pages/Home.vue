@@ -186,7 +186,7 @@ function clearTimer() {
 
         <van-button type="danger" @click="stopRobot" :style="styleComputed">急 停</van-button>
         <van-button type="warning" @click="endTeachMode" :style="styleComputed">停止示教</van-button>
-        <van-button type="primary" @click="handleSettings" :style="styleComputed">参数设置</van-button>
+        <van-button type="primary" @click="handleSettings" :style="styleComputed">设置</van-button>
       </div>
     </div>
   </div>

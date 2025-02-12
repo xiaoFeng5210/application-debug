@@ -244,6 +244,17 @@ export const getParams = async (): Promise<any> => {
 export const saveParams = async (data: { cmd: string, param: DebugPamrams }): Promise<Record<'data', Res>> => {
   return await http.post(`adjust`, data as any)
 }
+
+/**
+ * 更新点位
+ */
+export const fetchPointsActions = async (param: string, cmd: string): Promise<Record<'data', Res>> => {
+  return await http.post(`adjust`, {
+    cmd,
+    param
+  })
+}
+
 type lightsTime = [number, number]
 type lightsTimeRange = Array<lightsTime>
 export type LightsTimeRangeData = Array<lightsTimeRange>
