@@ -51,7 +51,6 @@ const init = async () => {
       pointList.value = data?.point_list?.data ?? []
       currentPoint.value = pointList.value[0]?.name ?? ''
       pointsActions.value = data?.point_list?.cmd_data ?? {}
-      console.log(pointsActions.value)
     }
   }
   catch {
